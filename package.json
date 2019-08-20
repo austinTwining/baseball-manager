@@ -1,0 +1,22 @@
+{
+  "name": "baseball-manager",
+  "version": "1.0.0",
+  "description": "house league baseball team management app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinTwining/baseball-manager.git"
+  },
+  "author": "Austin-James Twining",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinTwining/baseball-manager/issues"
+  },
+  "homepage": "https://github.com/austinTwining/baseball-manager#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
