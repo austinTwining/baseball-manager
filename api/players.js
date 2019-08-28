@@ -2,20 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 var players = [
-    {
-      id: 1,
-      name: 'John'
-    },{
-      id: 2,
-      name: 'Paul'
-    },{
-      id: 3,
-      name: 'Phil'
-    },{
-      id: 4,
-      name: 'Richard'
-    }
-  ]
+  {
+    id: 1,
+    name: 'John'
+  },{
+    id: 2,
+    name: 'Paul'
+  },{
+    id: 3,
+    name: 'Phil'
+  },{
+    id: 4,
+    name: 'Richard'
+  }
+]
 
 router.get('/', (req, res) => {
     res.json(players);
@@ -27,7 +27,7 @@ router.get('/:id', (req, res) => {
   if(currPlayer.length == 1){
     res.json(currPlayer[0])
   } else {
-    res.status(404);//Set status to 404 as movie was not found
+    res.status(404);//Set status to 404 as player was not found
     res.json({message: "Not Found"});
  }
   res.json(players);
