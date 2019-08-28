@@ -1,31 +1,33 @@
 import React, {Component} from 'react';
 
-class LoginForm extends Component {
+class RegistrationForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            name: '',
             email: '',
             password: '',
             token: ''
         };
     }
 
-    login(){
+    register(){
         //log in to backend service
-        fetch("/api/users/login", {
+        fetch("/api/users/register", {
            method: "POST",
            headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            name: this.state.name,
             email: this.state.email,
             password: this.state.password,
           })
         })
         .then((response) => {
             this.setState({token: response.headers.get('auth-token')});
-            return response.json()
+            return response.json();
         })
         .then((data) => {
             console.log(data.message);
@@ -37,9 +39,10 @@ class LoginForm extends Component {
             <div>
                 <form>
                     <ul>
+                        <li><input type="text" name='name' onChange={(event) => this.setState({name: event.target.value})}/></li>
                         <li><input type="text" name='email' onChange={(event) => this.setState({email: event.target.value})}/></li>
                         <li><input type="text" name='password' onChange={(event) => this.setState({password: event.target.value})}/></li>
-                        <li><button type="button" onClick={(event) => this.login()}>log in</button></li>
+                        <li><button type="button" onClick={(event) => this.register()}>register</button></li>
                     </ul>
                 </form>
             </div>
@@ -47,4 +50,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default RegistrationForm;

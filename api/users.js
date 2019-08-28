@@ -10,11 +10,11 @@ router.post('/register', async (req, res) => {
 
     //validate inputs
     const {error} = registerValidation(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+    if(error) return res.status(400).json({message: error.details[0].message});
 
     //check if user already in database
     const emailExist = await User.findOne({email: req.body.email});
-    if(emailExist) return res.status(400).send('email already exists');
+    if(emailExist) return res.status(400).json({message: "email already exists"});
 
     //hash password
     const salt = await bcrypt.genSalt(10);
@@ -27,9 +27,11 @@ router.post('/register', async (req, res) => {
     });
     try{
         const savedUser = await user.save();
-        res.send({user: user._id});
+        //create and assign json web token
+        const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+        res.header('auth-token', token).json({message: "registered"});
     }catch(err){
-        res.status(400).send(err);
+        res.status(400).json({error: err});
     }
 });
 
