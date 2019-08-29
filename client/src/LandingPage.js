@@ -4,6 +4,16 @@ import RegistrationForm from './components/RegistrationForm';
 import LogoutButton from './components/LogoutButton';
 
 export class LandingPage extends Component {
+
+    componentWillMount(){
+        //authenticate with backend service
+        fetch('/api/users/authenticate')
+            .then(response => response.json())
+            .then((data) => {
+                if(data.user) this.props.history.push("/dashboard");
+            });
+    }
+
     render() {
         return (
             <div>

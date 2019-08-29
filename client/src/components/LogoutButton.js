@@ -16,7 +16,9 @@ class LogoutButton extends Component {
         //log in to backend service
         fetch('/api/users/logout')
             .then(response => response.json())
-            .then(data => console.log(data.message));
+            .then((data) => {
+                this.props.history.push("/");
+            });
     }
 
     render(){

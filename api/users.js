@@ -6,6 +6,21 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const {registerValidation, loginValidation} = require('./validation');
 
+router.get('/', async (req, res) => {
+
+    const token = req.session.token;
+    if(!token) return res.status(401).send('access denied');
+
+    try{
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET); 
+        req.user = verified;
+        var userForId = await User.findOne({_id: req.user});
+        res.json({user: userForId});
+    }catch(err){
+          res.status(400).send('invalid token');  
+    }
+});
+
 router.post('/register', async (req, res) => {
 
     //validate inputs
