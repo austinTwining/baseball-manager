@@ -8,9 +8,6 @@ import Dashboard from './Dashboard';
 const App = () => {
   return(
     <div>
-      <nav>
-        <Link to="/dashboard">Dashboard</Link>
-      </nav>
       <div>
         <Route exact path="/" component={LandingPage} />
       </div>

@@ -13,8 +13,8 @@ router.get('/', async (req, res) => {
 
     try{
         const verified = jwt.verify(token, process.env.TOKEN_SECRET); 
-        req.user = verified;
-        var userForId = await User.findOne({_id: req.user});
+        req.user_id = verified;
+        var userForId = await User.findOne({_id: req.user_id});
         res.json({user: userForId});
     }catch(err){
           res.status(400).send('invalid token');  
@@ -78,12 +78,13 @@ router.post('/login', async (req, res) => {
     res.header('auth-token', token).json({message: "logged in"});
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', async (req, res) => {
 
     //end persistent session for user
-    req.session.destroy();
-
-    res.json({message: "logged out"});
+    await req.session.destroy((error) => {
+        if(error) res.json({error: error.details[0].message});
+        else res.json({message: "logged out"});
+    });
 
 });
 
@@ -93,8 +94,8 @@ router.get('/authenticate', (req, res) => {
 
     try{
         const verified = jwt.verify(token, process.env.TOKEN_SECRET); 
-        req.user = verified;
-        res.json({user: verified});
+        req.user_id = verified;
+        res.json({_id: verified});
     }catch(err){
           res.status(400).json({message: "invalid token"});  
     }

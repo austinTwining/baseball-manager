@@ -8,6 +8,7 @@ export class Dashboard extends Component {
         super(props);
 
         this.state = {
+            user_id: '',
             user: ''
         };
     }
@@ -17,8 +18,8 @@ export class Dashboard extends Component {
         fetch('/api/users/authenticate')
             .then(response => response.json())
             .then((data) => {
-                if(!data.user) this.props.history.push("/");
-                this.setState({user: data.user})
+                if(!data._id) this.props.history.push("/");
+                this.setState({user_id: data._id})
             });
     }
 
@@ -41,7 +42,7 @@ export class Dashboard extends Component {
         return (
             <div>
                 <code>{this.state.user.name}</code>
-                <LogoutButton></LogoutButton>
+                <LogoutButton history={this.props.history}></LogoutButton>
             </div>
         )
     }

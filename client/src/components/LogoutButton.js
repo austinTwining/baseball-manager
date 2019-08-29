@@ -4,12 +4,6 @@ class LogoutButton extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            email: '',
-            password: '',
-            token: ''
-        };
     }
 
     logout(){
@@ -17,7 +11,10 @@ class LogoutButton extends Component {
         fetch('/api/users/logout')
             .then(response => response.json())
             .then((data) => {
-                this.props.history.push("/");
+                if(data.message) {
+                    console.log(data.message);
+                    this.props.history.push('/');
+                }
             });
     }
 
@@ -26,7 +23,7 @@ class LogoutButton extends Component {
             <div>
                 <form>
                     <ul>
-                       <li><button type="submit" onClick={(event) => this.logout()}>log out</button></li>
+                       <li><button type="button" onClick={(event) => this.logout()}>log out</button></li>
                     </ul>
                 </form>
             </div>

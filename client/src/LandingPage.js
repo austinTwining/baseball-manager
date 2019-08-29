@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
-import LogoutButton from './components/LogoutButton';
 
 export class LandingPage extends Component {
 
@@ -10,7 +9,7 @@ export class LandingPage extends Component {
         fetch('/api/users/authenticate')
             .then(response => response.json())
             .then((data) => {
-                if(data.user) this.props.history.push("/dashboard");
+                if(data._id) this.props.history.push("/dashboard");
             });
     }
 
@@ -20,7 +19,6 @@ export class LandingPage extends Component {
                 <ul>
                     <li><LoginForm></LoginForm></li>
                     <li><RegistrationForm></RegistrationForm></li>
-                    <li><LogoutButton></LogoutButton></li>
                 </ul>
             </div>
         )
