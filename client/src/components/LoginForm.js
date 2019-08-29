@@ -4,6 +4,7 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             email: '',
             password: '',
@@ -39,7 +40,7 @@ class LoginForm extends Component {
                     <ul>
                         <li><input type="text" name='email' onChange={(event) => this.setState({email: event.target.value})}/></li>
                         <li><input type="text" name='password' onChange={(event) => this.setState({password: event.target.value})}/></li>
-                        <li><button type="button" onClick={(event) => this.login()}>log in</button></li>
+                        <li><button type="submit" onClick={(event) => this.login()}>log in</button></li>
                     </ul>
                 </form>
             </div>

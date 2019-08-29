@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "dev-run": "cd client && npm run build && cd .. && npm start"
+    "dev": "cd client && npm run build && cd .. && nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,11 @@
     "@hapi/joi": "^15.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "connect-mongo": "^3.0.0",
+    "cookie-parser": "^1.4.4",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.10"
   }

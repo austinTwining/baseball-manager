@@ -29,6 +29,11 @@ router.post('/register', async (req, res) => {
         const savedUser = await user.save();
         //create and assign json web token
         const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+
+        //start persistent session for user
+        req.session.token = token;
+        req.session.save();
+
         res.header('auth-token', token).json({message: "registered"});
     }catch(err){
         res.status(400).json({error: err});
@@ -50,7 +55,21 @@ router.post('/login', async (req, res) => {
 
     //create and assign json web token
     const token = jwt.sign({_id: user._id}, process.env.TOKEN_SECRET);
+
+    //start persistent session for user
+    req.session.token = token;
+    req.session.save();
+
     res.header('auth-token', token).json({message: "logged in"});
+});
+
+router.get('/logout', (req, res) => {
+
+    //end persistent session for user
+    req.session.destroy();
+
+    res.json({message: "logged out"});
+
 });
 
 module.exports = router;

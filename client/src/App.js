@@ -1,6 +1,8 @@
 import React from 'react';
 import LoginForm from './components/LoginForm';
 import RegistrationForm from './components/RegistrationForm';
+import LogoutButton from './components/LogoutButton';
+
 import './App.css';
 
 const App = () => {
@@ -9,6 +11,7 @@ const App = () => {
       <ul>
         <li><LoginForm></LoginForm></li>
         <li><RegistrationForm></RegistrationForm></li>
+        <li><LogoutButton></LogoutButton></li>
       </ul>
     </div>
   );

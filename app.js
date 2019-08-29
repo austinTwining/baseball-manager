@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const dotenv = require('dotenv');
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
@@ -17,6 +20,7 @@ mongoose.connect(
   () => {
   console.log('connected to db');
 });
+var db = mongoose.connection;
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -24,9 +28,17 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//session cookies
+app.use(cookieParser());
+app.use(session({secret: process.env.TOKEN_SECRET, saveUninitialized: true, resave: true, store: new MongoStore({mongooseConnection: db})}));
+
 //api endpoint router
-app.use('/api/players', require('./api/players'));
 app.use('/api/users', require('./api/users'));
+
+//verify authentication
+app.use(require('./api/verifyToken'));
+
+app.use('/api/players', require('./api/players'));
 
 //catchall handler
 app.get('*', (req, res) => {

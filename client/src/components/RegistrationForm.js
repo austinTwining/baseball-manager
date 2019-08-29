@@ -42,7 +42,7 @@ class RegistrationForm extends Component {
                         <li><input type="text" name='name' onChange={(event) => this.setState({name: event.target.value})}/></li>
                         <li><input type="text" name='email' onChange={(event) => this.setState({email: event.target.value})}/></li>
                         <li><input type="text" name='password' onChange={(event) => this.setState({password: event.target.value})}/></li>
-                        <li><button type="button" onClick={(event) => this.register()}>register</button></li>
+                        <li><button type="submit" onClick={(event) => this.register()}>register</button></li>
                     </ul>
                 </form>
             </div>
