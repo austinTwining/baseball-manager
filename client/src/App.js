@@ -1,18 +1,22 @@
 import React from 'react';
-import LoginForm from './components/LoginForm';
-import RegistrationForm from './components/RegistrationForm';
-import LogoutButton from './components/LogoutButton';
+import { Route, Link } from 'react-router-dom';
 
 import './App.css';
+import LandingPage from './LandingPage';
+import Dashboard from './Dashboard';
 
 const App = () => {
   return(
     <div>
-      <ul>
-        <li><LoginForm></LoginForm></li>
-        <li><RegistrationForm></RegistrationForm></li>
-        <li><LogoutButton></LogoutButton></li>
-      </ul>
+      <nav>
+        <Link to="/dashboard">Dashboard</Link>
+      </nav>
+      <div>
+        <Route exact path="/" component={LandingPage} />
+      </div>
+      <div>
+        <Route path="/dashboard" component={Dashboard} />
+      </div>
     </div>
   );
 }

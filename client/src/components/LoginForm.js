@@ -31,6 +31,7 @@ class LoginForm extends Component {
         .then((data) => {
             console.log(data.message);
         });
+
     }
 
     render(){

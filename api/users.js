@@ -72,4 +72,17 @@ router.get('/logout', (req, res) => {
 
 });
 
+router.get('/authenticate', (req, res) => {
+    const token = req.session.token;
+    if(!token) return res.status(401).json({message: "access denied"});
+
+    try{
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET); 
+        req.user = verified;
+        res.json({user: verified});
+    }catch(err){
+          res.status(400).json({message: "invalid token"});  
+    }
+})
+
 module.exports = router;
