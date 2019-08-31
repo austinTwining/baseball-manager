@@ -1,48 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-var players = [
-  {
-    id: 1,
-    name: 'John'
-  },{
-    id: 2,
-    name: 'Paul'
-  },{
-    id: 3,
-    name: 'Phil'
-  },{
-    id: 4,
-    name: 'Richard'
-  }
-]
+const Player = require('./models/Player');
 
-router.get('/', (req, res) => {
-    res.json(players);
-});
-router.get('/:id', (req, res) => {
-  var currPlayer = players.filter((player) => {
-    if(player.id == req.params.id) return true;
-  });
-  if(currPlayer.length == 1){
-    res.json(currPlayer[0])
-  } else {
-    res.status(404);//Set status to 404 as player was not found
-    res.json({message: "Not Found"});
- }
-  res.json(players);
-});
-router.post('/', (req, res) => {
-  if(!req.body.name){
+router.get('/', async (req, res) => {
+  if(!req.body.team_id){
     res.status(400);
     res.json("bad request!");
   }else{
-    var newId = players[players.length-1].id+1;
-    players.push({
-       id: newId,
-       name: req.body.name
+    try{
+        const players = await Player.find({team_id: req.body.team_id});
+        res.json({players: players});
+    }catch(err){
+        res.status(400).json({error: err});
+    }
+}
+});
+router.post('/', async (req, res) => {
+  if(!req.body.name || !req.body.team_id){
+    res.status(400);
+    res.json("bad request!");
+  }else{
+    const player = new Player({
+      name: req.body.name,
+      team_id: req.body.team_id
     });
-    res.json({message: "new player created", location: "/api/players/" + newId});
+    try{
+        const savedPlayer = await player.save();
+        res.json({message: "new player created"});
+    }catch(err){
+        res.status(400).json({error: err});
+    }
   }
 });
 router.put('/:id', (req, res) => {
