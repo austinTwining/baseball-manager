@@ -36,10 +36,11 @@ app.use(session({secret: process.env.TOKEN_SECRET, saveUninitialized: true, resa
 app.use('/api/users', require('./api/users'));
 
 //verify authentication
-app.use(require('./api/verifyToken'));
+//app.use(require('./api/verifyToken'));
 
 app.use('/api/teams', require('./api/teams'));
 app.use('/api/teams/players', require('./api/players'));
+app.use('/api/games', require('./api/games'));
 
 //catchall handler
 app.get('*', (req, res) => {

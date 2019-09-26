@@ -8,6 +8,12 @@ const teamSchema = new mongoose.Schema({
         min: 1,
         max: 255
     },
+    players:[{
+        player: {
+            type: ObjectId,
+            ref: 'Player'
+        }
+    }],
     owner_id: {
         type: ObjectId,
         ref: 'User'
